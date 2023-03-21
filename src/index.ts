@@ -110,4 +110,104 @@ app.post("/purchases", (req: Request, res: Response) => {
     res.status(201).send("Compra realizada com sucesso")
 })
 
+app.get("/products/:id", (req: Request, res: Response) => {
+    const {id} = req.params
+    const result = product.filter((prod) => {
+        return prod.id === id
+    })
 
+    res.status(200).send(result)
+})
+ 
+
+//APROFUNDAMENTO EXPRESS
+
+// Get Products by id
+
+app.get("/products/:id", (req: Request, res: Response) => {
+    // const id = req.params.id 
+    const {id} = req.params
+
+    const result = product.filter((account) => {
+        return account.id === id
+    })
+    // res.status(200).send({resultadoFiltro: result}) - Aqui cria um array com esse resultado, fica mais difícil para o front acessar
+    res.status(200).send(result)
+})
+
+// Get User Purchases by User id
+
+app.get("/users/:id/purchases", (req: Request, res: Response) => { 
+    const {id} = req.params
+
+    const result = purchase.filter((pur) => {
+        return pur.userId === id
+    })
+    res.status(200).send(result)
+})
+
+// Delete User by id
+
+app.delete("/users/:id", (req: Request, res: Response) => {
+    const {id} = req.params
+    const usersResult = user.findIndex((users) => {
+        return users.id === id
+    })
+
+    usersResult < 0 ? res.status(404).send("O id não foi encontrado") :  (user.splice(usersResult, 1), 
+    res.status(200).send("User apagado com sucesso"))
+})
+
+app.delete("/products/:id", (req: Request, res: Response) => {
+    const {id} = req.params
+    const productResult = product.findIndex((prod) => {
+        return prod.id === id
+    })
+
+    productResult < 0 ? res.status(404).send("O id não foi encontrado") :  (product.splice(productResult, 1), 
+    res.status(200).send("User apagado com sucesso"))
+})
+
+// Edit User by id
+
+app.put("/users/:id", (req: Request, res: Response) => {
+    const {id} = req.params // qual id vai alterar
+
+    const {newEmail} = req.body
+    const {newPassword} = req.body // tudo o que vai ser recebido por body para alterar
+
+    const userToEdit = user.find((users) => {
+        return users.id === id
+    })
+
+    if(userToEdit) {
+
+        userToEdit.email = newEmail || userToEdit.email
+        userToEdit.password = newPassword || userToEdit.password
+
+    } 
+    res.status(200).send("Cadastro atualizado com sucesso")
+})
+
+// Edit Product by id
+
+app.put("/products/:id", (req: Request, res: Response) => {
+    const {id} = req.params // qual id vai alterar
+
+    const {newName} = req.body
+    const {newPrice} = req.body
+    const {newCategory} = req.body  // tudo o que vai ser recebido por body para alterar
+
+    const productToEdit = product.find((prod) => {
+        return prod.id === id
+    })
+
+    if(productToEdit) {
+
+        productToEdit.name = newName || productToEdit.name
+        productToEdit.price = newPrice || productToEdit.price
+        productToEdit.category = newCategory || productToEdit.category
+
+    } 
+    res.status(200).send("Produto atualizado com sucesso")
+})
