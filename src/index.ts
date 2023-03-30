@@ -32,28 +32,63 @@ app.get('/ping', (req: Request, res: Response) => {
 
 // Get All Users
 app.get("/users", (req: Request, res: Response) => {
-    res.status(200).send(user)
+    try {
+        res.status(200).send(user)
+    } catch (error: any) {
+        console.log(error)
+        if(res.statusCode === 200){
+            res.status(500)
+    }
+}
 })
 
 // Get All Products
 app.get("/products", (req: Request, res: Response) => {
-    res.status(200).send(product)
+    try {
+        res.status(200).send(product)
+    } catch (error: any) {
+        console.log(error)
+        if(res.statusCode === 200){
+            res.status(500)
+    }
+}
 })
 
 // Get All Purchases
 app.get("/purchases", (req: Request, res: Response) => {
-    res.status(200).send(purchase)
+    try {
+        res.status(200).send(purchase)
+    } catch (error: any) {
+        console.log(error)
+        if(res.statusCode === 200){
+        res.status(500)
+    }
+}
 })
 
 // Search Product by name
 app.get("/product/search", (req: Request, res: Response) => {
-    const q = req.query.q as string
+   try {
+        const q = req.query.q as string
 
-    const result = product.filter((prod) => {
-        return prod.name.toLowerCase().includes(q.toLowerCase())
-    })
+        const result = product.filter((prod) => {
+            return prod.name.toLowerCase().includes(q.toLowerCase())
+        })
 
-    res.status(200).send(result)
+        res.status(200).send(result)
+
+        if (!q) {
+            res.status(400)
+            throw new Error("O name precisa de pelo menos 1 caractere");
+            
+        }
+
+   } catch (error) {
+    console.log(error)
+    if(res.statusCode === 200)
+    res.status(500)
+   }
+   
 
 })
 
