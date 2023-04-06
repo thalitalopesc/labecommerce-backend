@@ -82,3 +82,26 @@ WHERE name LIKE "%Hidratante%"
 AND price > 25 
 AND price < 50;
 
+CREATE TABLE purchases (
+    id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    total_price REAL NOT NULL,
+    paid INTEGER NOT NULL, -- 0 para false e 1 para true // começa valendo 0
+    delivered_at TEXT,
+    buyer_id TEXT NOT NULL,
+    FOREIGN KEY (buyer_id) REFERENCES users(id)
+);
+
+INSERT INTO purchases
+VALUES ("01a", "500", 0, "15-04-2023", "2"),
+("02a", "140", 0, "11-04-2023", "2"),
+("03a", "96", 0, "20-04-2023", "1"),
+("04a", "35", 0, "15-04-2023", "1"),
+("05a", "250", 0, "16-04-2023", "3");
+
+UPDATE purchases
+SET delivered_at = "03-04-2023"
+WHERE id = "05a";
+
+SELECT * FROM users
+INNER JOIN purchases
+ON users.id = "1"
