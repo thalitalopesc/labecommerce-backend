@@ -104,4 +104,38 @@ WHERE id = "05a";
 
 SELECT * FROM users
 INNER JOIN purchases
-ON users.id = "1"
+ON users.id = "1";
+
+CREATE TABLE purchases_products (
+    purchase_id TEXT NOT NULL,
+    product_id TEXT NOT NULL,
+    quantity INTEGER NOT NULL,
+    FOREIGN KEY (purchase_id) REFERENCES purchases(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+INSERT INTO purchases_products
+VALUES ("01a", "03", 2),
+("01a", "07", 1),
+("02a", "01", 3),
+("04a", "03", 5),
+("04a", "05", 2);
+
+DROP TABLE purchases_products;
+
+SELECT * FROM purchases_products;
+
+SELECT
+    purchases_products.purchase_id,
+    purchases_products.quantity,
+    purchases.total_price,
+    purchases.delivered_at,
+    purchases.buyer_id,
+    products.id,
+    products.name,
+    products.price
+FROM purchases_products
+INNER JOIN purchases
+ON purchases_products.purchase_id = purchases.id
+LEFT JOIN products
+ON products.id = purchases_products.product_id;
