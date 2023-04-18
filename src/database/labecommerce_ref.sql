@@ -6,7 +6,7 @@ CREATE TABLE users(
     password TEXT NOT NULL,
     created_at TEXT DEFAULT(DATETIME('now', 'localtime')) NOT NULL
 );
-
+DROP TABLE users;
 INSERT INTO users (id, name, email, password)
 VALUES 
 ("1", "Thalita Costa", "thalitacosta@email.com", "abc123"), 
@@ -25,6 +25,8 @@ CREATE TABLE products(
     image_url TEXT UNIQUE
 );
 
+DROP TABLE products;
+
 INSERT INTO products 
 VALUES 
 ("01", "Sabonete Líquido Facial", 86.90,"Rosto", null), 
@@ -37,7 +39,11 @@ VALUES
 ("08", "Creme de Mãos Hidratante", 22.00,"Banho e Corpo", null),
 ("09", "Máscara Facial Esfoliante", 85.00, "Rosto", null);
 
-SELECT * FROM products;
+SELECT * FROM products
+WHERE name LIKE "%Hidra%";
+
+SELECT * FROM products
+WHERE products.id = "04";
 
 CREATE TABLE purchases (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
@@ -48,6 +54,7 @@ CREATE TABLE purchases (
     FOREIGN KEY (buyer_id) REFERENCES users(id)
 );
 
+DROP TABLE purchases;
 INSERT INTO purchases (id, total_price, paid, buyer_id)
 VALUES ("01a", 450, 0, "2"),
 ("02a", 140, 0, "4"),
