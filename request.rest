@@ -1,0 +1,7 @@
+GET http://localhost:3003/users
+Content-Type: application/json
+###
+
+GET http://localhost:3003/product/search
+Content-Type: application/json
+###
