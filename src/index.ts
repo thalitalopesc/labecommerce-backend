@@ -515,8 +515,8 @@ app.get("/products/:id", async (req: Request, res: Response)=>{
         SELECT * FROM products
         WHERE products.id = "${id}";
         `) */
-
         res.status(200).send(result)
+
     } catch (error) {
         console.log(error)
 

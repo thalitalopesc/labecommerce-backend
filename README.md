@@ -13,7 +13,7 @@ Criação de uma API vinculada a um banco de dados de produtos de beleza.
 
 ## **Documentação**
 
-1. [Documentação Postman]()
+1. [Documentação Postman](https://documenter.getpostman.com/view/24823091/2s93Y2T2EV)
 
 
 ## **Tecnologias utilizadas**
